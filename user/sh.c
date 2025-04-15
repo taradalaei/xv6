@@ -85,27 +85,38 @@ void runcmd(struct cmd *cmd)
     {
       if (ecmd->argv[1])
       {
+        char *msg = ecmd->argv[1];
         int len = 0;
-        while (ecmd->argv[1][len])
+        while (msg[len])
           len++;
-        if (len > 12)
+
+        if (len > 512)
         {
           printf("Message too long\n");
         }
         else
         {
+
           int found = 0;
-          for (int i = 0; ecmd->argv[1][i] && ecmd->argv[1][i + 1]; i++)
+          for (int i = 0; msg[i] && msg[i + 1]; i++)
           {
-            if (ecmd->argv[1][i] == 'o' && ecmd->argv[1][i + 1] == 's')
+            if (msg[i] == 'o' && msg[i + 1] == 's')
             {
               found = 1;
               break;
             }
           }
+
           if (found)
-            printf("os\n");
-          printf("%s\n", ecmd->argv[1]);
+          {
+
+            printf("\033[1;34mos\033[0m\n");
+          }
+          else
+          {
+
+            printf("%s\n", msg);
+          }
         }
       }
       exit(0);
