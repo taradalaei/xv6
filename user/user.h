@@ -22,6 +22,8 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
+//added the systemcall as a function just like a normall c function
+int trigger(void);
 
 // ulib.c
 int stat(const char*, struct stat*);

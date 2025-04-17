@@ -36,3 +36,5 @@ entry("getpid");
 entry("sbrk");
 entry("sleep");
 entry("uptime");
+#added an entry for new systemcall so that a new assembly stub for trigger would be added to usys.S
+entry("trigger");
