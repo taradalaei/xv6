@@ -1,3 +1,5 @@
+#include "custom_logger.h"
+
 struct buf;
 struct context;
 struct file;
@@ -187,3 +189,7 @@ void            virtio_disk_intr(void);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))
+
+// custom logger
+void log_message(log_level_t level, const char* message);
+

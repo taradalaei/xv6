@@ -3,6 +3,7 @@
 #include "memlayout.h"
 #include "riscv.h"
 #include "defs.h"
+#include "custom_logger.h"
 
 volatile static int started = 0;
 
@@ -16,6 +17,12 @@ main()
     printf("\n");
     printf("xv6 kernel is booting\n");
     printf("\n");
+
+    //added this part for logger
+    log_message(LOG_INFO, "Welcome to AUT MCS Principles of Operating Systems Course. This message is from tara dalaei and samin ghahraman bamdadi.");
+    log_message(LOG_WARN, "This is a test warning message for the custom logger");
+    log_message(LOG_ERROR, "This is a test error message for the custom logger");
+
     kinit();         // physical page allocator
     kvminit();       // create kernel page table
     kvminithart();   // turn on paging
