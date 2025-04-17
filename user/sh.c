@@ -92,31 +92,23 @@ void runcmd(struct cmd *cmd)
 
         if (len > 512)
         {
-          printf("Message too long\n");
+          write(1, "Message too long\n", 17);
         }
         else
         {
-
-          int found = 0;
-          for (int i = 0; msg[i] && msg[i + 1]; i++)
+          for (int i = 0; msg[i]; i++)
           {
             if (msg[i] == 'o' && msg[i + 1] == 's')
             {
-              found = 1;
-              break;
+              write(1, "\033[1;34mos\033[0m", 15);
+              i++;
+            }
+            else
+            {
+              write(1, &msg[i], 1);
             }
           }
-
-          if (found)
-          {
-
-            printf("\033[1;34mos\033[0m\n");
-          }
-          else
-          {
-
-            printf("%s\n", msg);
-          }
+          write(1, "\n", 1);
         }
       }
       exit(0);
