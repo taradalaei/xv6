@@ -85,10 +85,23 @@ void runcmd(struct cmd *cmd)
     {
       if (ecmd->argv[1])
       {
-        char *msg = ecmd->argv[1];
+        char msg[513] = {0};
         int len = 0;
-        while (msg[len])
-          len++;
+        for (int i = 1; ecmd->argv[i]; i++)
+        {
+          int j = 0;
+          while (ecmd->argv[i][j])
+          {
+            if (len >= 512)
+              break;
+            msg[len++] = ecmd->argv[i][j++];
+          }
+
+          if (ecmd->argv[i + 1] && len < 512)
+          {
+            msg[len++] = ' ';
+          }
+        }
 
         if (len > 512)
         {
@@ -96,7 +109,7 @@ void runcmd(struct cmd *cmd)
         }
         else
         {
-          for (int i = 0; msg[i]; i++)
+          for (int i = 0; i < len; i++)
           {
             if (msg[i] == 'o' && msg[i + 1] == 's')
             {
