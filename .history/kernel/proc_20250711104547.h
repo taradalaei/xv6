@@ -102,17 +102,6 @@ enum threadstate
   THREAD_SLEEPING
 };
 
-// adding thread struct:
-struct thread
-{
-  enum threadstate state;
-  struct trapframe *trapframe;
-  uint id;
-  uint join;
-  int sleep_n;
-  uint sleep_tick0;
-};
-
 // Per-process state
 struct proc
 {
@@ -137,9 +126,4 @@ struct proc
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
-
-  // adding threads and current thread structs to the proc struct
-
-  struct thread threads[NTHREAD]; // every existing thread
-  struct thread *current_thread;  // current active thread
 };
