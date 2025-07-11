@@ -193,3 +193,16 @@ void            virtio_disk_intr(void);
 // custom logger
 void log_message(log_level_t level, const char* message);
 
+
+//for threads
+struct thread; 
+struct proc;
+ 
+void exitthread(); 
+void freethread(struct thread *t); 
+struct thread* allocthread(uint64 start_thread, uint64 stack_address, 
+uint64 arg); 
+int jointhread(uint id); 
+void sleepthread(int n, uint ticks0); 
+struct thread* initthread(struct proc *);
+int thread_schd(struct proc *);
