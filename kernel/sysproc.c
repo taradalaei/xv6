@@ -58,8 +58,20 @@ sys_sleep(void)
   argint(0, &n);
   if(n < 0)
     n = 0;
+    
+  if (n == 0) {
+      yield();
+      return 0;
+  }
+
   acquire(&tickslock);
   ticks0 = ticks;
+  if (myproc()->current_thread) { 
+    release(&tickslock); 
+    sleepthread(n, ticks0); 
+    return 0; 
+  } 
+
   while(ticks - ticks0 < n){
     if(killed(myproc())){
       release(&tickslock);
@@ -98,3 +110,22 @@ uint64 sys_trigger(void) {
   log_message(LOG_INFO, "This is a log to test a new xv6 system call");
   return 0;
 }
+
+// system call for threads
+uint64 sys_thread(void) {
+  uint64 start_thread, stack_address, arg;
+  argaddr(0, &start_thread);
+  argaddr(1, &stack_address);
+  argaddr(2, &arg);
+
+  struct thread *t = allocthread(start_thread, stack_address, arg);
+  return t ? t->id : 0;
+}
+
+// system call for join threads
+uint64 sys_jointhread(void) {
+  int id;
+  argint(0, &id);
+  return jointhread(id);
+}
+
